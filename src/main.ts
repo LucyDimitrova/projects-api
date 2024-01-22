@@ -11,7 +11,6 @@ async function bootstrap() {
     .setTitle('Projects API')
     .setDescription('Sample API for CRUD operations on Project entities')
     .setVersion('1.0')
-    .addTag('projects')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
