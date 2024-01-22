@@ -36,6 +36,8 @@ export class Project {
   speciesCount: number;
 
   @ManyToMany(() => Species, { cascade: true })
-  @JoinTable()
+  @JoinTable({
+    name: 'projects_highlighted_species',
+  })
   highlightedSpecies: Species[];
 }

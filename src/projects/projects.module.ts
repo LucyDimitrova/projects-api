@@ -6,11 +6,11 @@ import { Project } from './entities/project.entity';
 import { Species } from './entities/species.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Project, Species]),
-  ],
+  imports: [TypeOrmModule.forFeature([Project, Species])],
   controllers: [ProjectsController],
-  providers: [ProjectsService],
+  providers: [
+    ProjectsService,
+    ],
   exports: [ProjectsService],
 })
 export class ProjectsModule {}
