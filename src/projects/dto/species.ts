@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
-import { SpeciesStatus } from '../enums/Species';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { SpeciesStatus } from '../enums/Species';
 
 export class CreateSpeciesDto {
   @ApiProperty()
