@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './entities/project.entity';
+import { ProjectsQuery } from './queries/ProjectsQuery';
 
 @Injectable()
 export class ProjectsService {
@@ -12,7 +13,13 @@ export class ProjectsService {
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
   ) {}
-  async findAll(query?: Record<string, any>): Promise<Project[]> {
+
+  /**
+   * Fetches all projects with an optional query
+   *
+   * @param query
+   */
+  async findAll(query?: ProjectsQuery): Promise<Project[]> {
     // Query by species
     const { species } = query || {};
     return this.projectRepository.find({
@@ -28,37 +35,40 @@ export class ProjectsService {
         : {},
     });
   }
+
+  /**
+   * Creates a new project
+   *
+   * @param createProjectDto
+   */
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
-    try {
-      const project = this.projectRepository.create(createProjectDto);
-      return await this.projectRepository.save(project);
-    } catch (e) {
-      // TODO: refactor with Logger service
-      console.error('Error creating project: ', e);
-    }
+    const project = this.projectRepository.create(createProjectDto);
+    return await this.projectRepository.save(project);
   }
 
-  async findOne(id: number): Promise<Project> {
-    try {
-      const project = await this.projectRepository.findOne({ where: { id: id } });
-      if (!project) {
-        throw new NotFoundException(`Project with ID ${id} not found`);
-      }
-      return project;
-    } catch (e) {
-      // TODO: refactor with Logger service
-      console.error(`Error fetching project with ID ${id}: `, e);
-    }
+  /**
+   * Finds a project by ID
+   *
+   * @param id
+   */
+  async findById(id: number): Promise<Project> {
+    return await this.projectRepository.findOne({
+      where: { id },
+    });
   }
 
+  /**
+   * Updates a project
+   *
+   * @param id
+   * @param updateProjectDto
+   */
   async update(id: number, updateProjectDto: UpdateProjectDto) {
-    try {
-      const project = await this.findOne(id);
-      Object.assign(project, updateProjectDto);
-      return await this.projectRepository.save(project);
-    } catch (e) {
-      // TODO: refactor with Logger service
-      console.error(`Error updating project with ID ${id}: `, e);
+    const project = await this.findById(id);
+    if (!project) {
+      throw new NotFoundException(`Project with ID ${id} not found`);
     }
+    Object.assign(project, updateProjectDto);
+    return await this.projectRepository.save(project);
   }
 }

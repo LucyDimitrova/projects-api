@@ -34,4 +34,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Local DBs
 local.db
+local-test.db
