@@ -71,4 +71,17 @@ export class ProjectsService {
     Object.assign(project, updateProjectDto);
     return await this.projectRepository.save(project);
   }
+
+  /**
+   * Util method used for seeding a test database
+   *
+   * @param projects
+   */
+  async seedTestDatabase(projects: CreateProjectDto[]) {
+    return Promise.all(
+      projects.map(async (project) => {
+        await this.create(project);
+      }),
+    );
+  }
 }
