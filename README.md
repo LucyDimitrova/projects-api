@@ -20,9 +20,9 @@ $ npm run start
 $ npm run start:dev
 ```
 
-## Test the API
+## Swagger
 
-The API comes with Swagger/OpenAPI integration. After running the app, go to http://localhost:3000/api to test the API endpoints.
+The API comes with Swagger/OpenAPI integration. After running the app, go to http://localhost:3000/api to manually test the API endpoints.
 
 ## Test
 
